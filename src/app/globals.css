@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ivory: #F3EFE8;
+  --color-stone: #D9D3CA;
+  --color-stone-deep: #E6E1D8;
+  --color-stone-line: #CFC8BD;
+  --color-grey: #B8B2A8;
+  --color-ink: #2B2A28;
+  --color-muted: #8A847B;
+  --color-copper: #8F6240;
+  --color-copper-deep: #7A5234;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jost), "Jost", system-ui, sans-serif;
+  --ease-quiet: cubic-bezier(.22, .61, .36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::selection { background: #D9CDB8; color: var(--color-ink); }
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+img { display: block; }
+
+/* ---- type ---- */
+.serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: .02em; }
+.display { font-family: var(--font-serif); font-weight: 300; letter-spacing: .02em; line-height: 1.15; }
+.label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--color-muted); font-weight: 400; }
+.label-ink { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--color-ink); font-weight: 400; }
+.caption { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--color-muted); }
+.wordmark { font-family: var(--font-serif); font-weight: 400; letter-spacing: .42em; text-indent: .42em; text-transform: uppercase; }
+
+/* ---- links & buttons ---- */
+.link-line {
+  display: inline-block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 400;
+  padding-bottom: 4px; border-bottom: 1px solid currentColor; cursor: pointer; background: none;
+  transition: color .5s var(--ease-quiet), border-color .5s var(--ease-quiet);
+}
+.link-line:hover { color: var(--color-copper); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 16px;
+  height: 52px; padding: 0 36px; border-radius: 0; cursor: pointer;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 400;
+  transition: background-color .5s var(--ease-quiet), color .5s var(--ease-quiet), border-color .5s var(--ease-quiet), opacity .5s;
+}
+.btn-primary { background: var(--color-copper); color: var(--color-ivory); border: 1px solid var(--color-copper); }
+.btn-primary:hover { background: var(--color-copper-deep); border-color: var(--color-copper-deep); }
+.btn-secondary { background: transparent; color: var(--color-ink); border: 1px solid var(--color-ink); }
+.btn-secondary:hover { color: var(--color-copper); border-color: var(--color-copper); }
+.btn[disabled] { color: var(--color-grey); border-color: var(--color-stone); background: transparent; cursor: default; }
+
+/* ---- forms ---- */
+.input-line {
+  width: 100%; border: 0; border-bottom: 1px solid var(--color-grey); background: transparent; border-radius: 0;
+  padding: 6px 0 10px; font-family: var(--font-sans); font-weight: 300; font-size: 14px; color: var(--color-ink); outline: none;
+  transition: border-color .4s var(--ease-quiet);
+}
+.input-line::placeholder { color: var(--color-grey); }
+.input-line:focus { border-color: var(--color-copper); }
+.input-line.filled { border-color: var(--color-ink); }
+select.input-line { appearance: none; -webkit-appearance: none; cursor: pointer; }
+
+.radio { width: 14px; height: 14px; border: 1px solid var(--color-ink); border-radius: 50%; display: inline-grid; place-items: center; flex: none; }
+.radio > span { width: 6px; height: 6px; background: var(--color-copper); border-radius: 50%; opacity: 0; transition: opacity .3s; }
+.radio.on > span { opacity: 1; }
+.check { width: 14px; height: 14px; border: 1px solid var(--color-ink); display: inline-grid; place-items: center; font-size: 9px; color: var(--color-copper); flex: none; }
+
+.seg { display: flex; border: 1px solid var(--color-stone); }
+.seg > button {
+  flex: 1; text-align: center; padding: 12px 0; background: none; border: 0; cursor: pointer;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--color-muted);
+  border-bottom: 1px solid transparent; margin-bottom: -1px;
+  transition: color .4s var(--ease-quiet), border-color .4s var(--ease-quiet);
+}
+.seg > button.on { color: var(--color-ink); border-bottom-color: var(--color-copper); }
+.swatch { width: 28px; height: 28px; display: block; cursor: pointer; border: 0; padding: 0; outline: 1px solid transparent; outline-offset: 4px; transition: outline-color .4s var(--ease-quiet); }
+.swatch.on { outline-color: var(--color-copper); }
+
+/* ---- surfaces ---- */
+.stripe {
+  background: repeating-linear-gradient(135deg, var(--color-stone) 0 1px, var(--color-stone-line) 1px 14px);
+}
+.hairline { border-top: 1px solid var(--color-stone); }
+.mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; color: var(--color-muted); letter-spacing: .06em; }
+
+/* ---- motion ---- */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 1.1s var(--ease-quiet), transform 1.1s var(--ease-quiet); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* ---- hero ---- */
+@keyframes hero-settle { from { transform: scale(1.06); } to { transform: scale(1); } }
+@keyframes hero-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.hero-settle { animation: hero-settle 7s var(--ease-quiet) both; }
+.hero-rise { animation: hero-rise 1.4s var(--ease-quiet) .3s both; }
+@media (prefers-reduced-motion: reduce) { .hero-settle, .hero-rise { animation: none; } }
